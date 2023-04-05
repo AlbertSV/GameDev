@@ -363,7 +363,9 @@
 "Assets/Scripts/Checks/IsCheck.cs"
 "Assets/Scripts/ChipComponent.cs"
 "Assets/Scripts/FieldCreation.cs"
+"Assets/Scripts/MoveController.cs"
 "Assets/Scripts/Selected.cs"
+"Assets/Scripts/ValidMove.cs"
 -langversion:9.0
 
 /deterministic

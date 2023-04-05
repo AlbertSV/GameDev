@@ -65,6 +65,8 @@
     <Compile Include="Assets/Scripts/Checks/CheckContainer.cs" />
     <Compile Include="Assets/Scripts/Cells/CellContainer.cs" />
     <Compile Include="Assets/Scripts/Selected.cs" />
+    <Compile Include="Assets/Scripts/ValidMove.cs" />
+    <Compile Include="Assets/Scripts/MoveController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

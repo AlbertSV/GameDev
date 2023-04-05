@@ -20,6 +20,12 @@ namespace Checks
 
         private int numberOfRowsColumns = 8;
 
+        public GameObject[,] ChecksArray
+        {
+            get { return checksArray; }
+            set { checksArray = value; }
+        }
+
         private void Awake()
         {
             checkContainer = FindObjectOfType<CheckContainer>().transform;

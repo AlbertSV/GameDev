@@ -6,7 +6,13 @@ namespace Checks
 {
     public class ChipComponent : BaseClickComponent
     {
-        protected bool isClicked = false;
+        private static bool isClicked = false;
+
+        public static bool IsClicked
+        {
+            get { return isClicked; }
+            set { isClicked = value; }
+        }
 
         private void Update()
         {
@@ -23,11 +29,22 @@ namespace Checks
         public override void OnPointerEnter(PointerEventData eventData)
         {
             CallBackEvent((CellComponent)Pair, true);
+
+            AddAdditionalMaterial(focusMaterial);
+            _mesh.material = _meshMaterials[1];
         }
 
         public override void OnPointerExit(PointerEventData eventData)
         {
             CallBackEvent((CellComponent)Pair, false);
+
+            RemoveAdditionalMaterial();
+
+            if (isClicked)
+            {
+                _mesh.material = clickMaterial;
+            }
+            isClicked = false;
         }
 
         private void ClickController()

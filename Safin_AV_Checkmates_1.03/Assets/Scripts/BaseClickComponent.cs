@@ -90,7 +90,13 @@ namespace Checks
             OnFocusEventHandler?.Invoke(target, isSelect);
 		}
 
-		protected virtual void Start()
+        private void Awake()
+        {
+            focusMaterial = Resources.Load<Material>("Materials/FocusMaterial");
+            clickMaterial = Resources.Load<Material>("Materials/ClickMaterial");
+        }
+
+        protected virtual void Start()
         {
             _mesh = GetComponent<MeshRenderer>();
             //Этот список будет использоваться для набора материалов у меша,
