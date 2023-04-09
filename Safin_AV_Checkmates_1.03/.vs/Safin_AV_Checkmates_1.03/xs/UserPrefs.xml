@@ -1,0 +1,36 @@
+﻿<Properties StartupConfiguration="{A21C9AA4-CF4D-62E9-86EC-A40C7A012D66}|">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ValidMove.cs">
+    <Files>
+      <File FileName="Assets/Scripts/BaseClickComponent.cs" Line="96" Column="70" />
+      <File FileName="Assets/Scripts/CellComponent.cs" Line="37" Column="1" />
+      <File FileName="Assets/Scripts/ChipComponent.cs" Line="9" Column="42" />
+      <File FileName="Assets/Scripts/Checks/IsCheck.cs" Line="18" Column="1" />
+      <File FileName="Assets/Scripts/MoveController.cs" Line="28" Column="10" />
+      <File FileName="Assets/Scripts/Cells/IsCellColor.cs" Line="7" Column="1" />
+      <File FileName="Assets/Scripts/FieldCreation.cs" Line="30" Column="10" />
+      <File FileName="Assets/Scripts/ValidMove.cs" Line="141" Column="2" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Safin_AV_Checkmates_1.03" expanded="True" selected="True" />
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="Unity" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="209b074b-7062-4d0f-8ef3-72e6bae74773" />
+</Properties>

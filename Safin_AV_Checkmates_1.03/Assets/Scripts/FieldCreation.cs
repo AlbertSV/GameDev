@@ -39,6 +39,7 @@ namespace Checks
             CreationCell();
         }
 
+
         private void CreationCell()
         {
             for (int i = 0; i < numberOfRowsColumns; i++)

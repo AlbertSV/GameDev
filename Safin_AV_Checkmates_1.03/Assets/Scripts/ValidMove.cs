@@ -9,9 +9,13 @@ namespace Checks
         private bool isKing = false;
 
         private MoveController selectedCheck;
-        private ColorType selectedCheckColor;
+        private ColorType selectedCheckColorValidMove;
         private Component component;
 
+        private void Awake()
+        {
+
+        }
         void Update()
         {
 
@@ -19,7 +23,7 @@ namespace Checks
 
         public bool MoveApproved(GameObject[,] checkOnBoard, int x1, int y1, int x2, int y2)
         {
-            selectedCheckColor = selectedCheck.SelectedCheckColor;
+            selectedCheckColorValidMove = FindObjectOfType<MoveController>().SelectedCheckColor;
 
             int deltaMoveX = Mathf.Abs(x1 - x2);
             int deltaMoveY = (y2 - y1);
@@ -29,7 +33,7 @@ namespace Checks
                 return false;
             }
 
-            if ((selectedCheckColor == ColorType.Black && MoveController.IsBlackTurn == true) || isKing)
+            if ((selectedCheckColorValidMove == ColorType.Black && MoveController.IsBlackTurn == true) || isKing)
             {
                 if (deltaMoveX == 1)
                 {
@@ -48,7 +52,7 @@ namespace Checks
                 }
             }
 
-            if ((selectedCheckColor == ColorType.White && MoveController.IsBlackTurn == false) || isKing)
+            if ((selectedCheckColorValidMove == ColorType.White && MoveController.IsBlackTurn == false) || isKing)
             {
                 if (deltaMoveX == 1)
                 {
@@ -73,7 +77,7 @@ namespace Checks
         //Forcing to kill Enemy check, if it's possible
         public bool IsForcedToKill(GameObject[,] board, int x, int y)
         {
-            if(selectedCheckColor == ColorType.Black)
+            if(selectedCheckColorValidMove == ColorType.Black)
             {
                 //for top left check
                 if(x >=2 && y <= 5)
@@ -81,7 +85,7 @@ namespace Checks
                     GameObject check = board[x - 1, y + 1];
 
                     //if there is an enemy check
-                    if(check != null && selectedCheckColor != ColorType.Black)
+                    if(check != null && selectedCheckColorValidMove != ColorType.Black)
                     {
                         //if there is a space after enemy check
                         if (board[x - 2, y + 2] == null)
@@ -95,7 +99,7 @@ namespace Checks
                     GameObject check = board[x - 1, y - 1];
 
                     //if there is an enemy check
-                    if (check != null && selectedCheckColor != ColorType.White)
+                    if (check != null && selectedCheckColorValidMove != ColorType.White)
                     {
                         //if there is a space after enemy check
                         if (board[x - 2, y - 2] == null)
@@ -104,7 +108,7 @@ namespace Checks
                 }
             }
 
-            if (selectedCheckColor == ColorType.White)
+            if (selectedCheckColorValidMove == ColorType.White)
             {
                 //for bottom left check
                 if (x >= 2 && y >= 2)
@@ -112,7 +116,7 @@ namespace Checks
                     GameObject check = board[x - 1, y - 1];
 
                     //if there is an enemy check
-                    if (check != null && selectedCheckColor != ColorType.White)
+                    if (check != null && selectedCheckColorValidMove != ColorType.White)
                     {
                         //if there is a space after enemy check
                         if (board[x - 2, y - 2] == null)
@@ -126,7 +130,7 @@ namespace Checks
                     GameObject check = board[x + 1, y - 1];
 
                     //if there is an enemy check
-                    if (check != null && selectedCheckColor != ColorType.White)
+                    if (check != null && selectedCheckColorValidMove != ColorType.White)
                     {
                         //if there is a space after enemy check
                         if (board[x + 2, y - 2] == null)

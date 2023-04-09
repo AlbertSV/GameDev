@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1225079028400837516}
   - component: {fileID: 5840976139541420928}
   - component: {fileID: -4133044041037341355}
+  - component: {fileID: -8063102538657530279}
   m_Layer: 0
   m_Name: BlackCheck
   m_TagString: Untagged
@@ -126,3 +127,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _color: 1
+--- !u!114 &-8063102538657530279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6421145230948506861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b8114cfe0244a0691a41fe65f0a928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
