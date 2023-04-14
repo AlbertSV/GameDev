@@ -4,13 +4,13 @@ namespace Checks
 {
     public class IsCheck : MonoBehaviour
     {
-        [SerializeField] bool isBlackcheck = true;
+        [SerializeField] private bool isBlackCheck = true;
 
-        public bool IsBlackcheck
+        public bool IsBlackCheck
         {
             get
             {
-                return isBlackcheck;
+                return isBlackCheck;
             }
         }
     }

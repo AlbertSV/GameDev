@@ -16,7 +16,7 @@ namespace Checks
         private Transform cellContainer;
 
         private GameObject[,] checksArray;
-        private GameObject cellCreator;
+        private GameObject[,] cellArray;
 
         private int numberOfRowsColumns = 8;
 
@@ -26,11 +26,17 @@ namespace Checks
             set { checksArray = value; }
         }
 
+        public GameObject[,] CellArray
+        {
+            get { return cellArray; }
+        }
+
         private void Awake()
         {
             checkContainer = FindObjectOfType<CheckContainer>().transform;
             cellContainer = FindObjectOfType<CellContainer>().transform;
             checksArray = new GameObject[8,8];
+            cellArray = new GameObject[8, 8];
         }
 
         private void Start()
@@ -50,11 +56,11 @@ namespace Checks
                     {
                         if (j % 2 == 0)
                         {
-                            cellCreator = Instantiate(blackCell, new Vector3(i, 0, j), transform.rotation, cellContainer);
+                            cellArray[j,i] = Instantiate(blackCell, new Vector3(j, 0, i), transform.rotation, cellContainer);
                         }
                         else
                         {
-                            cellCreator = Instantiate(whiteCell, new Vector3(i, 0, j), transform.rotation, cellContainer);
+                            cellArray[j, i] = Instantiate(whiteCell, new Vector3(j, 0, i), transform.rotation, cellContainer);
                         }
                     }
                 }
@@ -64,11 +70,11 @@ namespace Checks
                     {
                         if (j % 2 == 0)
                         {
-                            cellCreator = Instantiate(whiteCell, new Vector3(i, 0, j), transform.rotation, cellContainer);
+                            cellArray[j, i] = Instantiate(whiteCell, new Vector3(j, 0, i), transform.rotation, cellContainer);
                         }
                         else
                         {
-                            cellCreator = Instantiate(blackCell, new Vector3(i, 0, j), transform.rotation, cellContainer);
+                            cellArray[j, i] = Instantiate(blackCell, new Vector3(j, 0, i), transform.rotation, cellContainer);
                         }
                     }
                 }

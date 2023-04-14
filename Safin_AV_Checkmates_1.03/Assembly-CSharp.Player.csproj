@@ -56,17 +56,18 @@
     <Analyzer Include="/Applications/Visual Studio.app/Contents/MonoBundle/Addins/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Scripts/CellComponent.cs" />
-    <Compile Include="Assets/Scripts/BaseClickComponent.cs" />
-    <Compile Include="Assets/Scripts/ChipComponent.cs" />
-    <Compile Include="Assets/Scripts/Checks/IsCheck.cs" />
     <Compile Include="Assets/Scripts/Cells/IsCellColor.cs" />
-    <Compile Include="Assets/Scripts/FieldCreation.cs" />
-    <Compile Include="Assets/Scripts/Checks/CheckContainer.cs" />
+    <Compile Include="Assets/Scripts/ChipComponent.cs" />
     <Compile Include="Assets/Scripts/Cells/CellContainer.cs" />
     <Compile Include="Assets/Scripts/Selected.cs" />
-    <Compile Include="Assets/Scripts/ValidMove.cs" />
     <Compile Include="Assets/Scripts/MoveController.cs" />
+    <Compile Include="Assets/Scripts/BaseClickComponent.cs" />
+    <Compile Include="Assets/Scripts/Checks/CheckContainer.cs" />
+    <Compile Include="Assets/Scripts/Cells/CellIsFocused.cs" />
+    <Compile Include="Assets/Scripts/CellComponent.cs" />
+    <Compile Include="Assets/Scripts/ValidMove.cs" />
+    <Compile Include="Assets/Scripts/FieldCreation.cs" />
+    <Compile Include="Assets/Scripts/Checks/IsCheck.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -8,18 +8,9 @@ namespace Checks
     {
         private bool isKing = false;
 
-        private MoveController selectedCheck;
         private ColorType selectedCheckColorValidMove;
         private Component component;
 
-        private void Awake()
-        {
-
-        }
-        void Update()
-        {
-
-        }
 
         public bool MoveApproved(GameObject[,] checkOnBoard, int x1, int y1, int x2, int y2)
         {
@@ -70,39 +61,36 @@ namespace Checks
                     }
                 }
             }
-
             return false;
         }
 
         //Forcing to kill Enemy check, if it's possible
         public bool IsForcedToKill(GameObject[,] board, int x, int y)
         {
-            if(selectedCheckColorValidMove == ColorType.Black)
+            if (selectedCheckColorValidMove == ColorType.Black)
             {
-                //for top left check
-                if(x >=2 && y <= 5)
+                //for top right check
+                if (x <=5 && y <= 5)
                 {
-                    GameObject check = board[x - 1, y + 1];
-
+                    GameObject check = board[x + 1, y + 1];
                     //if there is an enemy check
-                    if(check != null && selectedCheckColorValidMove != ColorType.Black)
+                    if (check != null && check.GetComponent<ChipComponent>().GetColor == ColorType.White)
                     {
                         //if there is a space after enemy check
-                        if (board[x - 2, y + 2] == null)
+                        if (board[x + 2, y + 2] == null)
                             return true;
                     }
                 }
 
-                //for top right check
-                if(x <= 5 && y <=5)
+                //for top left check
+                if(x >= 2 && y <=5)
                 {
-                    GameObject check = board[x - 1, y - 1];
-
+                    GameObject check = board[x - 1, y + 1];
                     //if there is an enemy check
-                    if (check != null && selectedCheckColorValidMove != ColorType.White)
+                    if (check != null && check.GetComponent<ChipComponent>().GetColor == ColorType.White)
                     {
                         //if there is a space after enemy check
-                        if (board[x - 2, y - 2] == null)
+                        if (board[x - 2, y + 2] == null)
                             return true;
                     }
                 }
@@ -116,9 +104,10 @@ namespace Checks
                     GameObject check = board[x - 1, y - 1];
 
                     //if there is an enemy check
-                    if (check != null && selectedCheckColorValidMove != ColorType.White)
+                    if (check != null && check.GetComponent<ChipComponent>().GetColor == ColorType.Black)
                     {
                         //if there is a space after enemy check
+
                         if (board[x - 2, y - 2] == null)
                             return true;
                     }
@@ -128,11 +117,11 @@ namespace Checks
                 if (x <= 5 && y >= 2)
                 {
                     GameObject check = board[x + 1, y - 1];
-
                     //if there is an enemy check
-                    if (check != null && selectedCheckColorValidMove != ColorType.White)
+                    if (check != null && check.GetComponent<ChipComponent>().GetColor == ColorType.Black)
                     {
                         //if there is a space after enemy check
+                        
                         if (board[x + 2, y - 2] == null)
                             return true;
                     }

@@ -358,6 +358,7 @@
 "Assets/Scripts/BaseClickComponent.cs"
 "Assets/Scripts/CellComponent.cs"
 "Assets/Scripts/Cells/CellContainer.cs"
+"Assets/Scripts/Cells/CellIsFocused.cs"
 "Assets/Scripts/Cells/IsCellColor.cs"
 "Assets/Scripts/Checks/CheckContainer.cs"
 "Assets/Scripts/Checks/IsCheck.cs"

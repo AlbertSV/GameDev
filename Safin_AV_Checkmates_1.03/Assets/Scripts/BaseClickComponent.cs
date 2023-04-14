@@ -43,10 +43,33 @@ namespace Checks
             _mesh.materials = _meshMaterials.Where(t => t != null).ToArray();
         }
 
+        public void AddAdditionalMaterial(MeshRenderer _mesh, Material[] _meshMaterials, Material material, int index = 1)
+        {
+            if (index < 1 || index > 2)
+            {
+                Debug.LogError("Попытка добавить лишний материал. Индекс может быть равен только 1 или 2");
+                return;
+            }
+            _meshMaterials[0] = _mesh.material;
+            _meshMaterials[index] = material;
+            _mesh.materials = _meshMaterials.Where(t => t != null).ToArray();
+        }
+
         /// <summary>
         /// Удаляет дополнительный материал
         /// </summary>
         public void RemoveAdditionalMaterial(int index = 1)
+        {
+            if (index < 1 || index > 2)
+            {
+                Debug.LogError("Попытка удалить несуществующий материал. Индекс может быть равен только 1 или 2");
+                return;
+            }
+            _meshMaterials[index] = null;
+            _mesh.materials = _meshMaterials.Where(t => t != null).ToArray();
+        }
+
+        public void RemoveAdditionalMaterial(MeshRenderer _mesh, Material[] _meshMaterials, int index = 1)
         {
             if (index < 1 || index > 2)
             {

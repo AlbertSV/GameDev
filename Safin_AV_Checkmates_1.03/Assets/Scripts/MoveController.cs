@@ -6,7 +6,7 @@ namespace Checks
 {
     public class MoveController : MonoBehaviour
     {
-        private ColorType selectedCheckColor;
+        private ColorType selectedCheckColor = ColorType.Black;
         private GameObject selectedCheckMove;
         private FieldCreation fieldCreation;
         private ValidMove selectedCheckValidMove;
@@ -18,7 +18,7 @@ namespace Checks
         private GameObject[,] checksArrayMove;
 
         private static bool isBlackTurn = true;
-        private bool hasKilled = true;
+        private bool hasKilled;
 
         private List<GameObject> forcedToKill;
 
@@ -26,6 +26,11 @@ namespace Checks
         {
             get { return isBlackTurn; }
             set { isBlackTurn = value; }
+        }
+
+        public GameObject SelectedCheck
+        {
+            get { return selectedCheckMove; }
         }
 
         public ColorType SelectedCheckColor
@@ -44,7 +49,7 @@ namespace Checks
 
 
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 try
                 {
@@ -99,115 +104,197 @@ namespace Checks
         //Moving availability check
         private void TryMove(int x1, int y1, int x2, int y2)
         {
-            //Debug.Log(selectedCheckMove.GetComponent<ValidMove>());
-            Debug.Log("you are in trymove");
-            selectedCheckValidMove = selectedCheckMove.GetComponent<ValidMove>();
+            if (selectedCheckMove != null)
+            {
+                selectedCheckValidMove = selectedCheckMove.GetComponent<ValidMove>();
+            }
 
             checksArrayMove = new GameObject[8, 8];
             checksArrayMove = FindObjectOfType<FieldCreation>().ChecksArray;
-
 
             forcedToKill = ScanForChecksToDestroy();
 
             //check if we are out of bounds
             if (x2 < 0 || x2 >= 8 || y2 < 0 || y2 >= 8)
             {
-                Debug.Log("Out of bonds");
                 if (selectedCheckMove != null)
                 {
                     MoveChecks(selectedCheckMove, x1, y1);
+                    Destroy(selectedCheckMove.GetComponent<Selected>());
+                    selectedCheckMove = null;
+                    ChipComponent.IsClicked = false;
+                    ChipComponent.CellFocusAdded = false;
                 }
 
                 startPosition = Vector2.zero;
-                Destroy(selectedCheckMove.GetComponent<Selected>());
-                selectedCheckMove = null;
-                ChipComponent.IsClicked = false;
             }
             
             
             //check if its a valid move
-            else if (selectedCheckValidMove.MoveApproved(checksArrayMove, x1, y1, x2, y2))
+            else if (selectedCheckValidMove != null && selectedCheckValidMove.MoveApproved(checksArrayMove, x1, y1, x2, y2))
             {
-                Debug.Log("valid moved");
                 //Did the checked killed?
                 //if this is a jump
-                if(Mathf.Abs(x1-x2) == 2)
+                if (Mathf.Abs(x1 - x2) == 2)
                 {
                     GameObject checkBetweenMove = checksArrayMove[(x1 + x2) / 2, (y1 + y2) / 2];
                     if (checkBetweenMove != null)
                     {
                         checksArrayMove[(x1 + x2) / 2, (y1 + y2) / 2] = null;
                         Destroy(checkBetweenMove.gameObject);
+                        hasKilled = true;
+
                     }
                 }
 
-                MoveChecks(selectedCheckMove, x2, y2);
-                checksArrayMove[x2, y2] = selectedCheckMove;
-                checksArrayMove[x1, y1] = null;
-                Destroy(selectedCheckMove.GetComponent<Selected>());
-                selectedCheckMove = null;
-                ChipComponent.IsClicked = false;
-                isBlackTurn = !isBlackTurn;
+                //do we have to kill the checkers?
+                if(forcedToKill.Count != 0 && hasKilled != true)
+                {
+                    MoveChecks(selectedCheckMove, x1, y1);
+                    startPosition = Vector2.zero;
+                    Destroy(selectedCheckMove.GetComponent<Selected>());
+                    //selectedCheckMove = null;
+                    ChipComponent.IsClicked = false;
+                    ChipComponent.CellFocusAdded = false;
+                }
+                else if (selectedCheckMove != null)
+                {
+                    MoveChecks(selectedCheckMove, x2, y2);
+                    checksArrayMove[x2, y2] = selectedCheckMove;
+                    checksArrayMove[x1, y1] = null;
+                    Destroy(selectedCheckMove.GetComponent<Selected>());
+                    //selectedCheckMove = null;
+                    ChipComponent.IsClicked = false;
+                    ChipComponent.CellFocusAdded = false;
+                }
 
+                if (ScanForChecksToDestroy(selectedCheckMove, x2, y2).Count != 0 && hasKilled)
+                {
+                    hasKilled = false;
+                    return;
+                }
+
+                isBlackTurn = !isBlackTurn;
             }
 
             //if the check wasn't moved
             else if (selectedCheckMove != null && endPosition == startPosition)
             {
-                Debug.Log("wasn't moved");
-
                 {
-                    Debug.Log("Boo,2");
                     MoveChecks(selectedCheckMove, x1, y1);
                     startPosition = Vector2.zero;
                     Destroy(selectedCheckMove.GetComponent<Selected>());
-                    selectedCheckMove = null;
+                    selectedCheckMove = null; 
                     ChipComponent.IsClicked = false;
+                    ChipComponent.CellFocusAdded = false;
+                }
+            }
+            EndTurn();
+        }
+
+        private void EndTurn()
+        {
+            forcedToKill = ScanForChecksToDestroy();
+            int x = (int)endPosition.x;
+            int y = (int)endPosition.y;
+
+            /*
+            if (selectedCheckMove != null)
+            {
+                if(selectedCheckColor == ColorType.Black && y == 7 && !selectedCheckMove.isKing)
+                {
+                    selectedCheckMove.isKing = true;
+                    selectedCheckMove.transform.Rotate(Vector3.right * 180);
+                }
+                else if (selectedCheckColor == ColorType.White && y == 0 && !selectedCheckMove.isKing)
+                {
+                    selectedCheckMove.isKing = true;
+                    selectedCheckMove.transform.Rotate(Vector3.right * 180);
+                }
+            }*/
+
+            selectedCheckMove = null;
+            hasKilled = false;
+            CheckVictory();
+
+        }
+
+        private void CheckVictory()
+        {
+            var leftChecks = FindObjectsOfType<IsCheck>();
+            bool hasWhite = false, hasBlack = false;
+            bool blackWin = false;
+
+            for (int i = 0; i < leftChecks.Length; i++)
+            {
+                if (leftChecks[i].GetComponent<ChipComponent>().GetColor == ColorType.Black)
+                {
+                    hasBlack = true;
+                }
+                else
+                {
+                    hasWhite = true;
                 }
             }
 
+            if(hasBlack == false)
+            {
+                blackWin = false;
+                Victory(blackWin);
+            }
+            if(hasWhite == false)
+            {
+                blackWin = true;
+                Victory(blackWin);
+            }
+        }
+
+        private void Victory(bool color)
+        {
+            if (color)
+            {
+                Debug.Log("Player black has  won!");
+            }
             else
             {
-                Debug.Log("default");
-                MoveChecks(selectedCheckMove, x1, y1);
-                startPosition = Vector2.zero;
-                Destroy(selectedCheckMove.GetComponent<Selected>());
-                selectedCheckMove = null;
-                ChipComponent.IsClicked = false;
-            }
-
-            
-            if (forcedToKill.Count != 0 && !hasKilled)
-            {
-                MoveChecks(selectedCheckMove, x1, y1);
-                startPosition = Vector2.zero;
-                Destroy(selectedCheckMove.GetComponent<Selected>());
-                selectedCheckMove = null;
-                ChipComponent.IsClicked = false;
-
+                Debug.Log("Player white has won!");
             }
         }
 
         private void MoveChecks(GameObject check, int x, int y)
         {
-            Debug.Log("you are in move check");
-            Debug.Log(Vector3.right * x);
             check.transform.position = Vector3.right * x + Vector3.forward * y + Vector3.up * 0.1f;
+        }
+
+        private List<GameObject> ScanForChecksToDestroy(GameObject check, int x, int y)
+        {
+            forcedToKill = new List<GameObject>();
+
+            if (checksArrayMove[x, y].GetComponent<ValidMove>().IsForcedToKill(checksArrayMove, x, y))
+            {
+                forcedToKill.Add(checksArrayMove[x, y]);
+            }
+            return forcedToKill;
         }
 
         private List<GameObject> ScanForChecksToDestroy()
         {
             forcedToKill = new List<GameObject>();
-
             //check all checkers
-            for (int i=0; i<8; i++)
-                for (int j=0; j <8; j++)
-                    if (checksArrayMove[i,j] != null &&
-                        ((checksArrayMove[i,j].GetComponent<ChipComponent>().GetColor == ColorType.Black && isBlackTurn) ||
-                        (checksArrayMove[i,j].GetComponent<ChipComponent>().GetColor == ColorType.White && !isBlackTurn)))
-                    {
-                        forcedToKill.Add(checksArrayMove[i, j]);
-                    }
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    if (checksArrayMove[i, j] != null &&
+                        ((checksArrayMove[i, j].GetComponent<ChipComponent>().GetColor == ColorType.Black && isBlackTurn == true) ||
+                        (checksArrayMove[i, j].GetComponent<ChipComponent>().GetColor == ColorType.White && isBlackTurn == false)))
+                        if (checksArrayMove[i, j].GetComponent<ValidMove>().IsForcedToKill(checksArrayMove, i, j))
+                        {
+
+                            forcedToKill.Add(checksArrayMove[i, j]);
+                        }
+                }
+            }
             return forcedToKill;
         }
 

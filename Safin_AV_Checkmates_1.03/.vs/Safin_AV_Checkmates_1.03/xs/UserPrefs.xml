@@ -5,16 +5,16 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ValidMove.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveController.cs">
     <Files>
       <File FileName="Assets/Scripts/BaseClickComponent.cs" Line="96" Column="70" />
       <File FileName="Assets/Scripts/CellComponent.cs" Line="37" Column="1" />
-      <File FileName="Assets/Scripts/ChipComponent.cs" Line="9" Column="42" />
-      <File FileName="Assets/Scripts/Checks/IsCheck.cs" Line="18" Column="1" />
-      <File FileName="Assets/Scripts/MoveController.cs" Line="28" Column="10" />
+      <File FileName="Assets/Scripts/ChipComponent.cs" Line="52" Column="1" />
+      <File FileName="Assets/Scripts/Checks/IsCheck.cs" Line="19" Column="1" />
+      <File FileName="Assets/Scripts/MoveController.cs" Line="128" Column="47" />
       <File FileName="Assets/Scripts/Cells/IsCellColor.cs" Line="7" Column="1" />
-      <File FileName="Assets/Scripts/FieldCreation.cs" Line="30" Column="10" />
-      <File FileName="Assets/Scripts/ValidMove.cs" Line="141" Column="2" />
+      <File FileName="Assets/Scripts/FieldCreation.cs" Line="67" Column="107" />
+      <File FileName="Assets/Scripts/ValidMove.cs" Line="72" Column="14" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
