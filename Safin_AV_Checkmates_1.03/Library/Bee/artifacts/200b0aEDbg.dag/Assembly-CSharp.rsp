@@ -356,6 +356,7 @@
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/BaseClickComponent.cs"
+"Assets/Scripts/CameraMoveControl.cs"
 "Assets/Scripts/CellComponent.cs"
 "Assets/Scripts/Cells/CellContainer.cs"
 "Assets/Scripts/Cells/CellIsFocused.cs"

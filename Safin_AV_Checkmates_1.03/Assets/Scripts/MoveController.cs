@@ -17,6 +17,8 @@ namespace Checks
 
         private GameObject[,] checksArrayMove;
 
+        private static bool cameraHasToMove = false;
+
         private static bool isBlackTurn = true;
         private bool hasKilled;
 
@@ -28,6 +30,12 @@ namespace Checks
             set { isBlackTurn = value; }
         }
 
+        public static bool CameraHasToMove
+        {
+            get { return cameraHasToMove; }
+            set { cameraHasToMove = value; }
+        }
+
         public GameObject SelectedCheck
         {
             get { return selectedCheckMove; }
@@ -37,6 +45,7 @@ namespace Checks
         {
             get { return selectedCheckColor; }
         }
+
 
         private void Update()
         {
@@ -166,6 +175,7 @@ namespace Checks
                     //selectedCheckMove = null;
                     ChipComponent.IsClicked = false;
                     ChipComponent.CellFocusAdded = false;
+                    cameraHasToMove = true;
                 }
 
                 if (ScanForChecksToDestroy(selectedCheckMove, x2, y2).Count != 0 && hasKilled)
@@ -181,22 +191,25 @@ namespace Checks
             else if (selectedCheckMove != null && endPosition == startPosition)
             {
                 {
+
                     MoveChecks(selectedCheckMove, x1, y1);
                     startPosition = Vector2.zero;
                     Destroy(selectedCheckMove.GetComponent<Selected>());
                     selectedCheckMove = null; 
                     ChipComponent.IsClicked = false;
                     ChipComponent.CellFocusAdded = false;
+                    Debug.Log(ChipComponent.CellFocusAdded);
                 }
             }
+
             EndTurn();
         }
 
         private void EndTurn()
         {
             forcedToKill = ScanForChecksToDestroy();
-            int x = (int)endPosition.x;
-            int y = (int)endPosition.y;
+            int x = (int)startPosition.x;
+            int y = (int)startPosition.y;
 
             /*
             if (selectedCheckMove != null)

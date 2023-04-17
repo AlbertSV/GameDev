@@ -68,6 +68,7 @@
     <Compile Include="Assets/Scripts/ValidMove.cs" />
     <Compile Include="Assets/Scripts/FieldCreation.cs" />
     <Compile Include="Assets/Scripts/Checks/IsCheck.cs" />
+    <Compile Include="Assets/Scripts/CameraMoveControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -8,7 +8,7 @@ namespace Checks
     {
         private static bool isClicked = false;
         private static bool needRemove = false;
-        private static bool cellFocusedAdded = false;
+        private static bool cellFocusedAdded = true;
 
         private bool addFocusMaterial = false;
 
@@ -18,7 +18,6 @@ namespace Checks
 
         private GameObject[,] arrayChecks;
         private GameObject[,] arrayCells;
-
         private Material[] cellMaterial = new Material[2];
 
         public static bool IsClicked
@@ -37,6 +36,7 @@ namespace Checks
             if (Input.GetMouseButtonDown(0))
             {
                 OnClickEventHandler += ClickController;
+                RemoveCellMaterial();
             }
             if (Input.GetMouseButtonUp(0))
             {
@@ -46,13 +46,20 @@ namespace Checks
             if(isClicked == false && addFocusMaterial == false)
             {
                 RemoveAdditionalMaterial();
+                cellFocusedAdded = false;
+                RemoveCellMaterial();
+                Destroy(FindObjectOfType<Selected>());
              
             }
 
-            if(cellFocusedAdded == false)
+            if (isClicked == false && cellFocusedAdded == true)
             {
+                cellFocusedAdded = false;
                 RemoveCellMaterial();
+
             }
+
+            //RemoveCellMaterial();
 
         }
 
@@ -82,6 +89,7 @@ namespace Checks
 
         private void ClickController()
         {
+
             AddAdditionalMaterial(clickMaterial);
             _mesh.material = _meshMaterials[2];
             _mesh.gameObject.AddComponent<Selected>();
@@ -91,9 +99,7 @@ namespace Checks
             _mesh.material = _mesh.materials[1];
 
             selectedCheck = FindObjectOfType<Selected>().gameObject;
-            Debug.Log(selectedCheck);
-            selectedCheckColorFocus = FindObjectOfType<MoveController>().SelectedCheckColor;
-            Debug.Log(selectedCheckColorFocus);
+            selectedCheckColorFocus = selectedCheck.GetComponent<ChipComponent>().GetColor;
             arrayCells = FindObjectOfType<FieldCreation>().CellArray;
             arrayChecks = FindObjectOfType<FieldCreation>().ChecksArray;
 
@@ -107,14 +113,10 @@ namespace Checks
                 //for left
                 if (x >= 1 && y <= 6)
                 {
-                    Debug.Log("2");
                     GameObject leftFromBlack = arrayChecks[x - 1, y + 1];
-
-                    Debug.Log(leftFromBlack);
 
                     if (leftFromBlack == null)
                     {
-                        Debug.Log("3s");
                         cellRenderer = arrayCells[x - 1, y + 1].GetComponent<MeshRenderer>();
                         AddAdditionalMaterial(cellRenderer, cellMaterial, focusMaterial, 1);
                         arrayCells[x - 1, y + 1].AddComponent<CellIsFocused>();
@@ -122,13 +124,11 @@ namespace Checks
                     }
                     else if (leftFromBlack != null && leftFromBlack.GetComponent<ChipComponent>().GetColor == ColorType.White)
                     {
-                        Debug.Log("4s");
                         if (x >= 2 && y <= 5)
                         {
                             GameObject doubleLeftForBlack = arrayChecks[x - 2, y + 2];
                             if (doubleLeftForBlack == null)
                             {
-                                Debug.Log("5s");
                                 cellRenderer = arrayCells[x - 2, y + 2].GetComponent<MeshRenderer>();
                                 AddAdditionalMaterial(cellRenderer, cellMaterial, focusMaterial, 1);
                                 arrayCells[x - 2, y + 2].AddComponent<CellIsFocused>();
@@ -186,7 +186,7 @@ namespace Checks
                         cellFocusedAdded = true;
 
                     }
-                    else if (leftFromWhite != null)
+                    else if (leftFromWhite != null && leftFromWhite.GetComponent<ChipComponent>().GetColor == ColorType.Black)
                     {
                         if (x >= 2 && y >= 2)
                         {
@@ -205,8 +205,8 @@ namespace Checks
                 //for right
                 if (x <= 6 && y >= 1)
                 {
-                    GameObject rightFromBlack = arrayChecks[x + 1, y - 1];
-                    if (rightFromBlack == null)
+                    GameObject rightFromWhite = arrayChecks[x + 1, y - 1];
+                    if (rightFromWhite == null)
                     {
                         cellRenderer = arrayCells[x + 1, y - 1].GetComponent<MeshRenderer>();
                         AddAdditionalMaterial(cellRenderer, cellMaterial, focusMaterial, 1);
@@ -214,7 +214,7 @@ namespace Checks
                         cellFocusedAdded = true;
 
                     }
-                    else if (rightFromBlack != null)
+                    else if (rightFromWhite != null && rightFromWhite.GetComponent<ChipComponent>().GetColor == ColorType.Black)
                     {
 
                         if (x <= 5 && y >= 2)
@@ -230,26 +230,26 @@ namespace Checks
                         }
                     }
                 }
-
-                //RemoveCellMaterial();
-
             }
         }
 
-        private void RemoveCellMaterial()
+        public void RemoveCellMaterial()
         {
-            if (selectedCheck == null)
+            if (cellFocusedAdded == false)
             {
-                CellIsFocused[] cellsWithFocus = FindObjectsOfType<CellIsFocused>();
-                Debug.Log("hekko");
-                foreach (CellIsFocused k in cellsWithFocus)
+                if (selectedCheck == null)
                 {
-                    Material[] cellMaterial = k.gameObject.GetComponent<MeshRenderer>().materials;
-                    Destroy(cellMaterial[1]);
-
+                    CellIsFocused[] cellsWithFocus = FindObjectsOfType<CellIsFocused>();
+                    foreach (CellIsFocused k in cellsWithFocus)
+                    {
+                        Debug.Log(k);
+                        Material[] cellMaterial = k.gameObject.GetComponent<MeshRenderer>().materials;
+                        Destroy(cellMaterial[1]);
+                        Destroy(k.GetComponent<CellIsFocused>());
+                    }
                 }
-            }
                 
+            }
         }
     }
 }
