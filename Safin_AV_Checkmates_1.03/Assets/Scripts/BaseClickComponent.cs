@@ -50,7 +50,6 @@ namespace Checks
                 Debug.LogError("Попытка добавить лишний материал. Индекс может быть равен только 1 или 2");
                 return;
             }
-            Debug.Log("WOW");
             _meshMaterials[0] = _mesh.material;
             _meshMaterials[index] = material;
             _mesh.materials = _meshMaterials.Where(t => t != null).ToArray();

@@ -18,7 +18,6 @@ namespace Checks
         private GameObject[,] checksArrayMove;
 
         private static bool cameraHasToMove = false;
-
         private static bool isBlackTurn = true;
         private bool hasKilled;
 
@@ -208,24 +207,24 @@ namespace Checks
         private void EndTurn()
         {
             forcedToKill = ScanForChecksToDestroy();
-            int x = (int)startPosition.x;
-            int y = (int)startPosition.y;
 
-            /*
             if (selectedCheckMove != null)
             {
-                if(selectedCheckColor == ColorType.Black && y == 7 && !selectedCheckMove.isKing)
-                {
-                    selectedCheckMove.isKing = true;
-                    selectedCheckMove.transform.Rotate(Vector3.right * 180);
-                }
-                else if (selectedCheckColor == ColorType.White && y == 0 && !selectedCheckMove.isKing)
-                {
-                    selectedCheckMove.isKing = true;
-                    selectedCheckMove.transform.Rotate(Vector3.right * 180);
-                }
-            }*/
 
+                int x = (int)endPosition.x;
+                int y = (int)endPosition.y;
+
+                if (selectedCheckColor == ColorType.Black && y == 7 && selectedCheckMove.GetComponent<isKing>() == null)
+                {
+                    selectedCheckMove.AddComponent<isKing>();
+                    selectedCheckMove.transform.Rotate(Vector3.right * 180);
+                }
+                else if (selectedCheckColor == ColorType.White && y == 0 && selectedCheckMove.GetComponent<isKing>() == null)
+                {
+                    selectedCheckMove.AddComponent<isKing>();
+                    selectedCheckMove.transform.Rotate(Vector3.right * 180);
+                }
+            }
             selectedCheckMove = null;
             hasKilled = false;
             CheckVictory();

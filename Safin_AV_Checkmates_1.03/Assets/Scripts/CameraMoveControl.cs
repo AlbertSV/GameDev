@@ -6,40 +6,43 @@ namespace Checks
 {
     public class CameraMoveControl : MonoBehaviour
     {
-        private Camera mainCamera;
+        private float speedBlack = -0.05f;
+        private float speedWhite = 0.05f;
+        private int tickPerSecond = 60;
 
-        [SerializeField] private GameObject pointRotation;
-
-        private Vector3 rotationVector;
-        private Quaternion rotationAngle;
-
-        private void Awake()
-        {
-            mainCamera = Camera.main;
-            rotationVector = pointRotation.transform.position;
-            rotationAngle = Quaternion.AngleAxis(10f * Time.deltaTime, Vector3.up);
-        }
 
         private void Update()
         {
-            CameraMove();
+            StartCoroutine(CameraRotate());
         }
 
-        private void CameraMove()
+
+        private IEnumerator CameraRotate()
         {
+            WaitForSeconds wait = new WaitForSeconds(1f / tickPerSecond);
+
             if (MoveController.CameraHasToMove == true)
             {
-                var v = mainCamera.transform.position - rotationVector;
-                v = rotationAngle * v;
-
-                if (MoveController.IsBlackTurn)
-                    //if ()
+                if (!MoveController.IsBlackTurn)
+                {
+                    while (transform.rotation.eulerAngles.y <= 180)
                     {
-                        {
-                            mainCamera.transform.position = rotationVector + v;
-                        }
-                        MoveController.CameraHasToMove = false;
+                        transform.Rotate(Vector3.up * speedWhite);
+                        yield return wait;
                     }
+                    MoveController.CameraHasToMove = false;
+                    transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 180, transform.rotation.z));
+                }
+                if (MoveController.IsBlackTurn)
+                {
+                    while (transform.rotation.eulerAngles.y <= 359)
+                    {
+                        transform.Rotate(Vector3.up * speedBlack);
+                        yield return wait;
+                    }
+                    MoveController.CameraHasToMove = false;
+                    transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.x, 0, transform.rotation.z));
+                }
             }
         }
     }
