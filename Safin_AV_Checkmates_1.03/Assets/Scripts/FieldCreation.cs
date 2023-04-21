@@ -6,6 +6,8 @@ namespace Checks
 {
     public class FieldCreation : MonoBehaviour
     {
+        //private features
+        #region
         [SerializeField] private GameObject blackCheck;
         [SerializeField] private GameObject whiteCheck;
 
@@ -19,7 +21,10 @@ namespace Checks
         private GameObject[,] cellArray;
 
         private int numberOfRowsColumns = 8;
+        #endregion
 
+        //properties
+        #region
         public GameObject[,] ChecksArray
         {
             get { return checksArray; }
@@ -30,7 +35,7 @@ namespace Checks
         {
             get { return cellArray; }
         }
-
+        #endregion
         private void Awake()
         {
             checkContainer = FindObjectOfType<CheckContainer>().transform;
@@ -45,7 +50,7 @@ namespace Checks
             CreationCell();
         }
 
-
+        //Method to creat the play field
         private void CreationCell()
         {
             for (int i = 0; i < numberOfRowsColumns; i++)
@@ -81,6 +86,7 @@ namespace Checks
             }
         }
 
+        //method to creat checks
         private void CreationChecks()
         {
             for (int i=0; i<3; i+=1)

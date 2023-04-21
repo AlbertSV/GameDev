@@ -6,6 +6,8 @@ namespace Checks
 {
     public class MoveController : MonoBehaviour
     {
+        //private features
+        #region
         private ColorType selectedCheckColor = ColorType.Black;
         private GameObject selectedCheckMove;
         private FieldCreation fieldCreation;
@@ -22,7 +24,10 @@ namespace Checks
         private bool hasKilled;
 
         private List<GameObject> forcedToKill;
+        #endregion
 
+        //properties
+        #region
         public static bool IsBlackTurn
         {
             get { return isBlackTurn; }
@@ -44,18 +49,11 @@ namespace Checks
         {
             get { return selectedCheckColor; }
         }
-
+        #endregion
 
         private void Update()
         {
             UpdateMouseOver();
-
-            if(selectedCheckMove != null)
-            {
-                //UpdatePieceDrag(selectedCheckMove);
-            }
-
-
 
             if (Input.GetMouseButtonUp(0))
             {
@@ -75,6 +73,8 @@ namespace Checks
             }
         }
 
+
+        //to catch the position of the mouse
         private void UpdateMouseOver()
         {
             RaycastHit hit;
@@ -88,15 +88,6 @@ namespace Checks
             {
                 mouseOver.x = -1;
                 mouseOver.y = -1;
-            }
-        }
-
-        private void UpdatePieceDrag(GameObject selected)
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 50.0f, LayerMask.GetMask("Board")))
-            {
-                selected.transform.position = hit.point + Vector3.up;
             }
         }
 
@@ -119,7 +110,6 @@ namespace Checks
 
             checksArrayMove = new GameObject[8, 8];
             checksArrayMove = FindObjectOfType<FieldCreation>().ChecksArray;
-
             forcedToKill = ScanForChecksToDestroy();
 
             //check if we are out of bounds
@@ -165,6 +155,7 @@ namespace Checks
                     ChipComponent.IsClicked = false;
                     ChipComponent.CellFocusAdded = false;
                 }
+                //you can move to the different cell
                 else if (selectedCheckMove != null)
                 {
                     MoveChecks(selectedCheckMove, x2, y2);
@@ -176,7 +167,7 @@ namespace Checks
                     ChipComponent.CellFocusAdded = false;
                     cameraHasToMove = true;
                 }
-
+                //scan if we need to destroy enemy check
                 if (ScanForChecksToDestroy(selectedCheckMove, x2, y2).Count != 0 && hasKilled)
                 {
                     hasKilled = false;
@@ -204,6 +195,7 @@ namespace Checks
             EndTurn();
         }
 
+        //to end the turn, clean up and check if there is King
         private void EndTurn()
         {
             forcedToKill = ScanForChecksToDestroy();
@@ -231,6 +223,7 @@ namespace Checks
 
         }
 
+        //checking condition of victory
         private void CheckVictory()
         {
             var leftChecks = FindObjectsOfType<IsCheck>();
@@ -260,7 +253,7 @@ namespace Checks
                 Victory(blackWin);
             }
         }
-
+        //claim the victory
         private void Victory(bool color)
         {
             if (color)
@@ -273,11 +266,13 @@ namespace Checks
             }
         }
 
+        //simple move of the check
         private void MoveChecks(GameObject check, int x, int y)
         {
             check.transform.position = Vector3.right * x + Vector3.forward * y + Vector3.up * 0.1f;
         }
 
+        //scan to destroy enemy checks
         private List<GameObject> ScanForChecksToDestroy(GameObject check, int x, int y)
         {
             forcedToKill = new List<GameObject>();

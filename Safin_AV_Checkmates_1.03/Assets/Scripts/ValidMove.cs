@@ -6,11 +6,15 @@ namespace Checks
 {
     public class ValidMove : MonoBehaviour
     {
+        //private features
+        #region
         private ColorType selectedCheckColorValidMove;
         private GameObject selectedCheck;
         private Component component;
+        #endregion
 
 
+        //check if the move is possible
         public bool MoveApproved(GameObject[,] checkOnBoard, int x1, int y1, int x2, int y2)
         {
             selectedCheckColorValidMove = FindObjectOfType<MoveController>().SelectedCheckColor;
@@ -24,6 +28,7 @@ namespace Checks
                 return false;
             }
 
+            //check if the position to move is right
             if ((selectedCheckColorValidMove == ColorType.Black && MoveController.IsBlackTurn == true) && selectedCheck.GetComponent<isKing>() == null)
             {
                 if (deltaMoveX == 1)

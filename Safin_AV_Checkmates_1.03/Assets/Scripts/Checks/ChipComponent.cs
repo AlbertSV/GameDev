@@ -6,6 +6,8 @@ namespace Checks
 {
     public class ChipComponent : BaseClickComponent
     {
+        //private features
+        #region
         private static bool isClicked = false;
         private static bool cellFocusedAdded = true;
 
@@ -18,6 +20,7 @@ namespace Checks
         private GameObject[,] arrayChecks;
         private GameObject[,] arrayCells;
         private Material[] cellMaterial = new Material[2];
+        #endregion
 
         public static bool IsClicked
         {
@@ -55,13 +58,11 @@ namespace Checks
             {
                 cellFocusedAdded = false;
                 RemoveCellMaterial();
-
             }
-
-            //RemoveCellMaterial();
 
         }
 
+        //add focus material to the check
         public override void OnPointerEnter(PointerEventData eventData)
         {
             CallBackEvent((CellComponent)Pair, true);
@@ -73,7 +74,7 @@ namespace Checks
                 addFocusMaterial = true;
             }
         }
-
+        //remove focus material to the check
         public override void OnPointerExit(PointerEventData eventData)
         {
             CallBackEvent((CellComponent)Pair, false);
@@ -86,16 +87,17 @@ namespace Checks
 
         }
 
+
+        //material control on the click
         private void ClickController()
         {
-
+            //add material for check, if it's clicked
             AddAdditionalMaterial(clickMaterial);
             _mesh.material = _meshMaterials[1];
             _mesh.gameObject.AddComponent<Selected>();
             addFocusMaterial = false;
 
             isClicked = !isClicked;
-            //_mesh.material = _mesh.materials[2];
 
             selectedCheck = FindObjectOfType<Selected>().gameObject;
             selectedCheckColorFocus = selectedCheck.GetComponent<ChipComponent>().GetColor;
@@ -105,7 +107,7 @@ namespace Checks
             int x = (int)selectedCheck.transform.position.x;
             int y = (int)selectedCheck.transform.position.z;
 
-            //for top
+            //for top cell
             if (selectedCheckColorFocus == ColorType.Black || selectedCheck.GetComponent<isKing>() != null)
             {
                 //for left
@@ -171,7 +173,7 @@ namespace Checks
 
             }
 
-            //for bottom
+            //for bottom cell
             if (selectedCheckColorFocus == ColorType.White || selectedCheck.GetComponent<isKing>() != null)
             {
                 //for left
@@ -236,10 +238,13 @@ namespace Checks
             }
         }
 
+        //removing cells added material
         public void RemoveCellMaterial()
         {
+            Debug.Log(cellFocusedAdded);
             if (cellFocusedAdded == false)
             {
+                Debug.Log(cellFocusedAdded);
                 if (selectedCheck == null)
                 {
                     CellIsFocused[] cellsWithFocus = FindObjectsOfType<CellIsFocused>();

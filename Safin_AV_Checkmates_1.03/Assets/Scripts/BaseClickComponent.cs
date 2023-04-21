@@ -14,6 +14,7 @@ namespace Checks
 
         protected Material focusMaterial;
         protected Material clickMaterial;
+        private Material blackCellMaterial;
 
         [Tooltip("Цветовая сторона игрового объекта"), SerializeField]
         private ColorType _color;
@@ -50,7 +51,7 @@ namespace Checks
                 Debug.LogError("Попытка добавить лишний материал. Индекс может быть равен только 1 или 2");
                 return;
             }
-            _meshMaterials[0] = _mesh.material;
+            _meshMaterials[0] = blackCellMaterial;
             _meshMaterials[index] = material;
             _mesh.materials = _meshMaterials.Where(t => t != null).ToArray();
         }
@@ -59,17 +60,6 @@ namespace Checks
         /// Удаляет дополнительный материал
         /// </summary>
         public void RemoveAdditionalMaterial(int index = 1)
-        {
-            if (index < 1 || index > 2)
-            {
-                Debug.LogError("Попытка удалить несуществующий материал. Индекс может быть равен только 1 или 2");
-                return;
-            }
-            _meshMaterials[index] = null;
-            _mesh.materials = _meshMaterials.Where(t => t != null).ToArray();
-        }
-
-        public void RemoveAdditionalMaterial(MeshRenderer _mesh, Material[] _meshMaterials, int index = 1)
         {
             if (index < 1 || index > 2)
             {
@@ -117,6 +107,7 @@ namespace Checks
         {
             focusMaterial = Resources.Load<Material>("Materials/FocusMaterial");
             clickMaterial = Resources.Load<Material>("Materials/ClickMaterial");
+            blackCellMaterial = Resources.Load<Material>("Materials/BlackCell");
         }
 
         protected virtual void Start()
