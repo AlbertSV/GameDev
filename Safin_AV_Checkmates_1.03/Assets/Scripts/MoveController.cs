@@ -1,15 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Checks
 {
-    public class MoveController : MonoBehaviour
+    public class MoveController : MonoBehaviour, ISerializable
     {
         //private features
         #region
-        private ColorType selectedCheckColor = ColorType.Black;
-        private GameObject selectedCheckMove;
+        private static ColorType selectedCheckColor = ColorType.Black;
+        private static GameObject selectedCheckMove;
         private FieldCreation fieldCreation;
         private ValidMove selectedCheckValidMove;
 
@@ -24,6 +26,10 @@ namespace Checks
         private bool hasKilled;
 
         private List<GameObject> forcedToKill;
+
+        public IObserveable observer;
+
+        public event Action StepFinished;
         #endregion
 
         //properties
@@ -40,37 +46,63 @@ namespace Checks
             set { cameraHasToMove = value; }
         }
 
-        public GameObject SelectedCheck
+        public static GameObject SelectedCheck
         {
             get { return selectedCheckMove; }
         }
 
-        public ColorType SelectedCheckColor
+        public static ColorType SelectedCheckColor
         {
             get { return selectedCheckColor; }
         }
         #endregion
 
+        private void Start()
+        {
+            checksArrayMove = new GameObject[8, 8];
+            checksArrayMove = FindObjectOfType<FieldCreation>().ChecksArray;
+        }
+
         private void Update()
         {
             UpdateMouseOver();
-
-            if (Input.GetMouseButtonUp(0))
+            if(Input.GetMouseButtonDown(0))
             {
                 try
                 {
                     FindSelected();
+
                 }
                 catch
                 {
                     Debug.Log("Choose the check for the move");
                 }
+
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
                 endPosition.x = mouseOver.x;
                 endPosition.y = mouseOver.y;
-
                 TryMove((int)startPosition.x, (int)startPosition.y, (int)endPosition.x, (int)endPosition.y);
 
             }
+        }
+
+        private void OnEnable()
+        {
+            if (TryGetComponent(out observer))
+            {
+                observer.NextStepReadyClick += OnNextStepClickReady;
+                observer.NextStepReady += OnNextStepReady;
+                
+            }
+        }
+
+        private void OnDisable()
+        {
+            observer.NextStepReadyClick -= OnNextStepClickReady;
+            observer.NextStepReady -= OnNextStepReady;
+            
         }
 
 
@@ -100,6 +132,21 @@ namespace Checks
             startPosition.y = selectedCheckMove.transform.position.z + 0.5f;
         }
 
+        private void OnNextStepClickReady((int x, int y) position)
+        {
+            checksArrayMove[position.x, position.y].GetComponent<ChipComponent>().ClickController(position.x, position.y);
+        }
+
+        private void OnNextStepReady((int x, int y) endPosition)
+        {
+            if(endPosition.x == -1 && endPosition.y == -1)
+            {
+                return;
+            }
+            FindSelected();
+            TryMove((int)startPosition.x, (int)startPosition.y, endPosition.x, endPosition.y);
+        }
+
         //Moving availability check
         private void TryMove(int x1, int y1, int x2, int y2)
         {
@@ -108,8 +155,7 @@ namespace Checks
                 selectedCheckValidMove = selectedCheckMove.GetComponent<ValidMove>();
             }
 
-            checksArrayMove = new GameObject[8, 8];
-            checksArrayMove = FindObjectOfType<FieldCreation>().ChecksArray;
+            observer?.Serialize((selectedCheckMove.transform.position.x, selectedCheckMove.transform.position.z).ToString().ToSerializable(selectedCheckColor, RecordType.Click));
             forcedToKill = ScanForChecksToDestroy();
 
             //check if we are out of bounds
@@ -126,8 +172,6 @@ namespace Checks
 
                 startPosition = Vector2.zero;
             }
-            
-            
             //check if its a valid move
             else if (selectedCheckValidMove != null && selectedCheckValidMove.MoveApproved(checksArrayMove, x1, y1, x2, y2))
             {
@@ -141,31 +185,35 @@ namespace Checks
                         checksArrayMove[(x1 + x2) / 2, (y1 + y2) / 2] = null;
                         Destroy(checkBetweenMove.gameObject);
                         hasKilled = true;
+                        observer?.Serialize(((x1 + x2) / 2, (y1 + y2) / 2).ToString().ToSerializable(selectedCheckMove.GetComponent<ChipComponent>().GetColor, RecordType.Remove));
 
                     }
                 }
-
+                 
                 //do we have to kill the checkers?
                 if(forcedToKill.Count != 0 && hasKilled != true)
                 {
                     MoveChecks(selectedCheckMove, x1, y1);
                     startPosition = Vector2.zero;
                     Destroy(selectedCheckMove.GetComponent<Selected>());
-                    //selectedCheckMove = null;
                     ChipComponent.IsClicked = false;
                     ChipComponent.CellFocusAdded = false;
                 }
                 //you can move to the different cell
                 else if (selectedCheckMove != null)
                 {
+                    observer?.Serialize((x1, y1).ToString().ToSerializable(selectedCheckMove.GetComponent<ChipComponent>().GetColor, RecordType.Move, (x2, y2).ToString()));
+
                     MoveChecks(selectedCheckMove, x2, y2);
                     checksArrayMove[x2, y2] = selectedCheckMove;
                     checksArrayMove[x1, y1] = null;
+
                     Destroy(selectedCheckMove.GetComponent<Selected>());
-                    //selectedCheckMove = null;
                     ChipComponent.IsClicked = false;
                     ChipComponent.CellFocusAdded = false;
                     cameraHasToMove = true;
+                    StepFinished?.Invoke();
+
                 }
                 //scan if we need to destroy enemy check
                 if (ScanForChecksToDestroy(selectedCheckMove, x2, y2).Count != 0 && hasKilled)
@@ -188,23 +236,22 @@ namespace Checks
                     selectedCheckMove = null; 
                     ChipComponent.IsClicked = false;
                     ChipComponent.CellFocusAdded = false;
-                    Debug.Log(ChipComponent.CellFocusAdded);
                 }
             }
 
-            EndTurn();
+            EndTurn(x2, y2);
         }
 
         //to end the turn, clean up and check if there is King
-        private void EndTurn()
+        private void EndTurn(int x2, int y2)
         {
             forcedToKill = ScanForChecksToDestroy();
 
             if (selectedCheckMove != null)
             {
 
-                int x = (int)endPosition.x;
-                int y = (int)endPosition.y;
+                int x = x2;
+                int y = y2;
 
                 if (selectedCheckColor == ColorType.Black && y == 7 && selectedCheckMove.GetComponent<isKing>() == null)
                 {

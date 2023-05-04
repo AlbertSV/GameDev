@@ -58,16 +58,21 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/Checks/isKing.cs" />
     <Compile Include="Assets/Scripts/Cells/IsCellColor.cs" />
+    <Compile Include="Assets/Scripts/RecordType.cs" />
     <Compile Include="Assets/Scripts/Checks/ChipComponent.cs" />
     <Compile Include="Assets/Scripts/Cells/CellContainer.cs" />
     <Compile Include="Assets/Scripts/Checks/Selected.cs" />
+    <Compile Include="Assets/Scripts/Extensions.cs" />
     <Compile Include="Assets/Scripts/CameraMoveControl.cs" />
+    <Compile Include="Assets/Scripts/Observer.cs" />
     <Compile Include="Assets/Scripts/MoveController.cs" />
     <Compile Include="Assets/Scripts/BaseClickComponent.cs" />
     <Compile Include="Assets/Scripts/Checks/CheckContainer.cs" />
+    <Compile Include="Assets/Scripts/IObserveable.cs" />
     <Compile Include="Assets/Scripts/Cells/CellIsFocused.cs" />
     <Compile Include="Assets/Scripts/Cells/CellComponent.cs" />
     <Compile Include="Assets/Scripts/ValidMove.cs" />
+    <Compile Include="Assets/Scripts/ISerializable.cs" />
     <Compile Include="Assets/Scripts/FieldCreation.cs" />
     <Compile Include="Assets/Scripts/Checks/IsCheck.cs" />
   </ItemGroup>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,7 +12,6 @@ namespace Checks
         #region
         private static bool isClicked = false;
         private static bool cellFocusedAdded = true;
-
         private bool addFocusMaterial = false;
 
         private ColorType selectedCheckColorFocus;
@@ -20,6 +21,8 @@ namespace Checks
         private GameObject[,] arrayChecks;
         private GameObject[,] arrayCells;
         private Material[] cellMaterial = new Material[2];
+
+        
         #endregion
 
         public static bool IsClicked
@@ -33,11 +36,13 @@ namespace Checks
             set { cellFocusedAdded = value; }
         }
 
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
                 OnClickEventHandler += ClickController;
+                
                 RemoveCellMaterial();
             }
             if (Input.GetMouseButtonUp(0))
@@ -51,7 +56,6 @@ namespace Checks
                 cellFocusedAdded = false;
                 RemoveCellMaterial();
                 Destroy(FindObjectOfType<Selected>());
-             
             }
 
             if (isClicked == false && cellFocusedAdded == true)
@@ -65,7 +69,6 @@ namespace Checks
         //add focus material to the check
         public override void OnPointerEnter(PointerEventData eventData)
         {
-            CallBackEvent((CellComponent)Pair, true);
 
             if (isClicked == false)
             {
@@ -77,7 +80,6 @@ namespace Checks
         //remove focus material to the check
         public override void OnPointerExit(PointerEventData eventData)
         {
-            CallBackEvent((CellComponent)Pair, false);
 
             if (addFocusMaterial)
             {
@@ -89,20 +91,60 @@ namespace Checks
 
 
         //material control on the click
-        private void ClickController()
+        public void ClickController(int Xstep = -1, int Ystep = -1)
         {
-            //add material for check, if it's clicked
-            AddAdditionalMaterial(clickMaterial);
-            _mesh.material = _meshMaterials[1];
-            _mesh.gameObject.AddComponent<Selected>();
-            addFocusMaterial = false;
-
-            isClicked = !isClicked;
-
-            selectedCheck = FindObjectOfType<Selected>().gameObject;
-            selectedCheckColorFocus = selectedCheck.GetComponent<ChipComponent>().GetColor;
             arrayCells = FindObjectOfType<FieldCreation>().CellArray;
             arrayChecks = FindObjectOfType<FieldCreation>().ChecksArray;
+            Debug.Log("sda");
+
+            //add material for check, if it's clicked
+            if (Xstep != -1 && Ystep != -1)
+            {
+                if(isClicked)
+                {
+                    isClicked = false;
+                    addFocusMaterial = false;
+                    if (isClicked == false && addFocusMaterial == false)
+                    {
+                        selectedCheck = null;
+                        cellFocusedAdded = false;
+                        RemoveCellMaterial();
+
+                        MeshRenderer selectedCheckRender = FindObjectOfType<Selected>().gameObject.GetComponent<MeshRenderer>();
+                        Material[] meshMaterials = selectedCheckRender.materials;
+                        ColorType checkColor = FindObjectOfType<Selected>().gameObject.GetComponent<ChipComponent>().GetColor;
+
+                        RemoveAdditionalMaterial(selectedCheckRender, meshMaterials, checkColor);
+                        
+                        
+                        Destroy(FindObjectOfType<Selected>());
+                    }
+                }
+                selectedCheck = arrayChecks[Xstep, Ystep];
+                AddAdditionalMaterial(clickMaterial);
+                selectedCheck.GetComponent<MeshRenderer>().material = _meshMaterials[1];
+                selectedCheck.AddComponent<Selected>();
+                addFocusMaterial = false;
+
+                isClicked = !isClicked;
+            }
+
+            else
+            {
+                
+                AddAdditionalMaterial(clickMaterial);
+                _mesh.material = _meshMaterials[1];
+                _mesh.gameObject.AddComponent<Selected>();
+                addFocusMaterial = false;
+
+                isClicked = !isClicked;
+
+                selectedCheck = FindObjectOfType<Selected>().gameObject;
+            }
+
+
+            selectedCheckColorFocus = selectedCheck.GetComponent<ChipComponent>().GetColor;
+
 
             int x = (int)selectedCheck.transform.position.x;
             int y = (int)selectedCheck.transform.position.z;
@@ -241,10 +283,8 @@ namespace Checks
         //removing cells added material
         public void RemoveCellMaterial()
         {
-            Debug.Log(cellFocusedAdded);
             if (cellFocusedAdded == false)
             {
-                Debug.Log(cellFocusedAdded);
                 if (selectedCheck == null)
                 {
                     CellIsFocused[] cellsWithFocus = FindObjectsOfType<CellIsFocused>();
@@ -252,7 +292,6 @@ namespace Checks
                     {
                         Material[] cellMaterial = k.gameObject.GetComponent<MeshRenderer>().materials;
                         Destroy(cellMaterial[1]);
-                        //cellMaterial[0]  = Resources.Load<Material>("Materials/BlackCell");
                         Destroy(k.GetComponent<CellIsFocused>());
                     }
                 }

@@ -17,7 +17,7 @@ namespace Checks
         //check if the move is possible
         public bool MoveApproved(GameObject[,] checkOnBoard, int x1, int y1, int x2, int y2)
         {
-            selectedCheckColorValidMove = FindObjectOfType<MoveController>().SelectedCheckColor;
+            selectedCheckColorValidMove = MoveController.SelectedCheckColor;
             selectedCheck = FindObjectOfType<Selected>().gameObject;
 
             int deltaMoveX = Mathf.Abs(x1 - x2);

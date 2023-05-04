@@ -366,8 +366,13 @@
 "Assets/Scripts/Checks/IsCheck.cs"
 "Assets/Scripts/Checks/isKing.cs"
 "Assets/Scripts/Checks/Selected.cs"
+"Assets/Scripts/Extensions.cs"
 "Assets/Scripts/FieldCreation.cs"
+"Assets/Scripts/IObserveable.cs"
+"Assets/Scripts/ISerializable.cs"
 "Assets/Scripts/MoveController.cs"
+"Assets/Scripts/Observer.cs"
+"Assets/Scripts/RecordType.cs"
 "Assets/Scripts/ValidMove.cs"
 -langversion:9.0
 

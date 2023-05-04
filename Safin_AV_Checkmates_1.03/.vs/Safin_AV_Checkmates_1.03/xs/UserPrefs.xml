@@ -1,20 +1,36 @@
 ﻿<Properties StartupConfiguration="{A21C9AA4-CF4D-62E9-86EC-A40C7A012D66}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Checks/ChipComponent.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/albertsafin/github/GameDev/Safin_AV_Checkmates_1.03/Assets/Scripts/ValidMove.cs" relfile="Assets/Scripts/ValidMove.cs" line="103" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c5403845-0104-4f81-8376-288c892fae58" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/FieldCreation.cs">
     <Files>
-      <File FileName="Assets/Scripts/FieldCreation.cs" Line="102" Column="19" />
+      <File FileName="Assets/Scripts/FieldCreation.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Cells/IsCellColor.cs" Line="7" Column="1" />
       <File FileName="Assets/Scripts/Checks/CheckContainer.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MoveController.cs" Line="207" Column="31" />
+      <File FileName="Assets/Scripts/MoveController.cs" Line="141" Column="1" />
       <File FileName="Assets/Scripts/Checks/isKing.cs" Line="7" Column="5" />
-      <File FileName="Assets/Scripts/ValidMove.cs" Line="196" Column="45" />
+      <File FileName="Assets/Scripts/ValidMove.cs" Line="271" Column="1" />
       <File FileName="Assets/Scripts/Checks/IsCheck.cs" Line="11" Column="2" />
-      <File FileName="Assets/Scripts/Checks/ChipComponent.cs" Line="246" Column="47" />
-      <File FileName="Assets/Scripts/BaseClickComponent.cs" Line="53" Column="13" />
+      <File FileName="Assets/Scripts/Checks/ChipComponent.cs" Line="246" Column="41" />
+      <File FileName="Assets/Scripts/BaseClickComponent.cs" Line="54" Column="50" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="Safin_AV_Checkmates_1.03" expanded="True" selected="True" />
+          <Node name="Safin_AV_Checkmates_1.03" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="FieldCreation.cs" selected="True" />
+              </Node>
+            </Node>
+            <Node name="Packages" expanded="True" />
+          </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
@@ -27,13 +43,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/albertsafin/github/GameDev/Safin_AV_Checkmates_1.03/Assets/Scripts/BaseClickComponent.cs" relfile="Assets/Scripts/BaseClickComponent.cs" line="47" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="275f64cf-69e5-4ef5-944e-fe181126ecb2" />
 </Properties>

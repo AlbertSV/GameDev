@@ -14,6 +14,8 @@ namespace Checks
 
         protected Material focusMaterial;
         protected Material clickMaterial;
+        protected Material blackChipMaterial;
+        protected Material whiteChipMaterial;
         private Material blackCellMaterial;
 
         [Tooltip("Цветовая сторона игрового объекта"), SerializeField]
@@ -40,6 +42,7 @@ namespace Checks
                 Debug.LogError("Попытка добавить лишний материал. Индекс может быть равен только 1 или 2");
                 return;
             }
+           
             _meshMaterials[index] = material;
             _mesh.materials = _meshMaterials.Where(t => t != null).ToArray();
         }
@@ -70,6 +73,19 @@ namespace Checks
             _mesh.materials = _meshMaterials.Where(t => t != null).ToArray();
         }
 
+        public void RemoveAdditionalMaterial( MeshRenderer _mesh, Material[] _meshMaterials, ColorType checkColor, int index = 1)
+        {
+            if (index < 1 || index > 2)
+            {
+                Debug.LogError("Попытка удалить несуществующий материал. Индекс может быть равен только 1 или 2");
+                return;
+            }
+
+            _meshMaterials[index] = null;
+            _meshMaterials[0] = checkColor == ColorType.Black ? blackChipMaterial : whiteChipMaterial;
+            _mesh.materials = _meshMaterials.Where(t => t != null).ToArray();
+        }
+
         /// <summary>
         /// Событие клика на игровом объекте
         /// </summary>
@@ -93,7 +109,7 @@ namespace Checks
         //При нажатии мышкой по объекту, вызывается данный метод
         public void OnPointerClick(PointerEventData eventData)
 		{
-            OnClickEventHandler?.Invoke();
+            OnClickEventHandler?.Invoke(-1,-1);
         }
 
         //Этот метод можно вызвать в дочерних классах (если они есть) и тем самым пробросить вызов
@@ -108,6 +124,8 @@ namespace Checks
             focusMaterial = Resources.Load<Material>("Materials/FocusMaterial");
             clickMaterial = Resources.Load<Material>("Materials/ClickMaterial");
             blackCellMaterial = Resources.Load<Material>("Materials/BlackCell");
+            blackChipMaterial = Resources.Load<Material>("Materials/BlackCheck");
+            whiteChipMaterial = Resources.Load<Material>("Materials/WhiteCheck");
         }
 
         protected virtual void Start()
@@ -118,7 +136,7 @@ namespace Checks
             //1 элемент - родной материал меша, он не меняется
             //2 элемент - материал при наведении курсора на клетку/выборе фишки
             //3 элемент - материал клетки, на которую можно передвинуть фишку
-            _meshMaterials[0] = _mesh.material;
+             _meshMaterials[0] = _mesh.material;
         }
 	}
 
@@ -128,6 +146,6 @@ namespace Checks
         Black
     }
 
-    public delegate void ClickEventHandler();
+    public delegate void ClickEventHandler(int x, int y);
     public delegate void FocusEventHandler(CellComponent component, bool isSelect);
 }
