@@ -1,24 +1,32 @@
 ﻿<Properties StartupConfiguration="{A21C9AA4-CF4D-62E9-86EC-A40C7A012D66}|">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/albertsafin/github/GameDev/Safin_AV_Checkmates_1.03/Assets/Scripts/ValidMove.cs" relfile="Assets/Scripts/ValidMove.cs" line="103" column="1" />
+      <Breakpoint file="/Users/albertsafin/github/GameDev/Safin_AV_Checkmates_1.03/Assets/Scripts/MoveController.cs" relfile="Assets/Scripts/MoveController.cs" line="152" column="1" />
+      <Breakpoint file="/Users/albertsafin/github/GameDev/Safin_AV_Checkmates_1.03/Assets/Scripts/Observer.cs" relfile="Assets/Scripts/Observer.cs" line="117" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c5403845-0104-4f81-8376-288c892fae58" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/FieldCreation.cs">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="26528064-82d3-4f58-a00d-5ca3459af126" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Observer.cs">
     <Files>
-      <File FileName="Assets/Scripts/FieldCreation.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/FieldCreation.cs" Line="51" Column="1" />
       <File FileName="Assets/Scripts/Cells/IsCellColor.cs" Line="7" Column="1" />
       <File FileName="Assets/Scripts/Checks/CheckContainer.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MoveController.cs" Line="141" Column="1" />
+      <File FileName="Assets/Scripts/MoveController.cs" Line="219" Column="1" />
+      <File FileName="Assets/Scripts/Checks/ChipComponent.cs" Line="261" Column="1" />
+      <File FileName="Assets/Scripts/Observer.cs" Line="176" Column="2" />
       <File FileName="Assets/Scripts/Checks/isKing.cs" Line="7" Column="5" />
-      <File FileName="Assets/Scripts/ValidMove.cs" Line="271" Column="1" />
+      <File FileName="Assets/Scripts/ValidMove.cs" Line="103" Column="1" />
       <File FileName="Assets/Scripts/Checks/IsCheck.cs" Line="11" Column="2" />
-      <File FileName="Assets/Scripts/Checks/ChipComponent.cs" Line="246" Column="41" />
-      <File FileName="Assets/Scripts/BaseClickComponent.cs" Line="54" Column="50" />
+      <File FileName="Assets/Scripts/BaseClickComponent.cs" Line="129" Column="10" />
+      <File FileName="Assets/Scripts/Extensions.cs" Line="26" Column="37" />
+      <File FileName="Assets/Scripts/CameraMoveControl.cs" Line="17" Column="1" />
+      <File FileName="Assets/Scripts/IObserveable.cs" Line="12" Column="40" />
+      <File FileName="Assets/Scripts/ISerializable.cs" Line="6" Column="6" />
+      <File FileName="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/StandaloneInputModule.cs" Line="180" Column="1" />
+      <File FileName="Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" Line="517" Column="1" />
+      <File FileName="Library/PackageCache/com.unity.ide.visualstudio@2.0.16/Editor/VisualStudioIntegration.cs" Line="152" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -26,7 +34,8 @@
           <Node name="Safin_AV_Checkmates_1.03" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="FieldCreation.cs" selected="True" />
+                <Node name="Checks" expanded="True" />
+                <Node name="Observer.cs" selected="True" />
               </Node>
             </Node>
             <Node name="Packages" expanded="True" />
@@ -43,4 +52,5 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
