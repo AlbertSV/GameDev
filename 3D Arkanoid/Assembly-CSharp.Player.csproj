@@ -58,12 +58,14 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/IsBall.cs" />
     <Compile Include="Assets/Scripts/GameControl.cs" />
+    <Compile Include="Assets/Scripts/LevelTwo.cs" />
     <Compile Include="Assets/Scripts/MoveControl.cs" />
     <Compile Include="Assets/Scripts/MoveController.cs" />
     <Compile Include="Assets/Scripts/IsBlock.cs" />
     <Compile Include="Assets/Scripts/PlayerSide.cs" />
     <Compile Include="Assets/Scripts/IsBoarder.cs" />
     <Compile Include="Assets/Scripts/TriggerControl.cs" />
+    <Compile Include="Assets/Scripts/BallControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

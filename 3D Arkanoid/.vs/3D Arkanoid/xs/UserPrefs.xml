@@ -1,10 +1,17 @@
 ﻿<Properties StartupConfiguration="{D10641EE-8133-6B35-D188-CE376484C7CF}|">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="03490255-124b-4aac-be14-83bb230c64c6" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameControl.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameControl.cs" Line="74" Column="16" />
-      <File FileName="Assets/Scripts/MoveControl.cs" Line="57" Column="1" />
-      <File FileName="Assets/Scripts/TriggerControl.cs" Line="29" Column="10" />
+      <File FileName="Assets/Scripts/MoveControl.cs" Line="161" Column="14" />
+      <File FileName="Assets/Scripts/TriggerControl.cs" Line="9" Column="33" />
+      <File FileName="Assets/Scripts/LevelTwo.cs" Line="6" Column="42" />
+      <File FileName="Assets/Scripts/GameControl.cs" Line="58" Column="105" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,7 +20,9 @@
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
+        <State>
+          <Value>NeedToMove</Value>
+        </State>
       </Pad>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
@@ -22,10 +31,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2a696231-cbad-4763-8a08-4810ea17bbc8" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
