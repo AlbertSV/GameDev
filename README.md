@@ -1,6 +1,7 @@
 ## Checkers project for Unity
 
-** The prototype made during the Unity GameDev course**
+** The prototype made during the Unity GameDev course
+
 Game made for two players with checkers game rules.
 - Checks can move only diagonally
 - All posible moves are highligted
